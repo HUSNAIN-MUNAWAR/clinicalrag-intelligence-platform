@@ -1,0 +1,55 @@
+from app.ingestion.source_adapters.base import SourceAdapter, SourceDownloadResult
+DEMO_DOCS = {'asthma_educational_topic.xml': '<health-topic><title>Asthma Educational Overview</title><license>Public educational '
+                                 'demo content written for this repository.</license><summary>Asthma is a chronic '
+                                 'airway condition associated with inflammation and variable airflow '
+                                 'limitation.</summary><symptoms>Symptoms may include wheezing, cough, shortness of '
+                                 'breath, and chest tightness.</symptoms><diagnosis>Diagnosis can involve clinical '
+                                 'history, physical exam, spirometry, and trigger '
+                                 'assessment.</diagnosis><treatment>Treatment decisions depend on severity, control, '
+                                 'and patient-specific factors and should be made by qualified healthcare '
+                                 'professionals.</treatment><warning>Severe breathing difficulty, blue lips, '
+                                 'confusion, or inability to speak in full sentences can be an '
+                                 'emergency.</warning></health-topic>',
+ 'hypertension_medlineplus_style.txt': 'Hypertension Overview\n'
+                                       'License: Public educational demo content written for this repository.\n'
+                                       'Year: 2026\n'
+                                       '\n'
+                                       'Summary\n'
+                                       'Hypertension means persistently elevated blood pressure. It is a risk factor '
+                                       'for cardiovascular disease, stroke, kidney disease, and other complications.\n'
+                                       '\n'
+                                       'Symptoms\n'
+                                       'Many people with hypertension do not have symptoms. Very high blood pressure '
+                                       'can be associated with headache, shortness of breath, chest pain, or '
+                                       'neurologic symptoms, which require urgent clinical evaluation.\n'
+                                       '\n'
+                                       'Risk Factors\n'
+                                       'Risk factors can include age, family history, high sodium intake, obesity, '
+                                       'physical inactivity, tobacco use, diabetes, kidney disease, and some '
+                                       'medications.\n'
+                                       '\n'
+                                       'Diagnosis\n'
+                                       'Diagnosis is based on repeated properly measured blood pressure readings using '
+                                       'validated equipment.\n'
+                                       '\n'
+                                       'Treatment\n'
+                                       'Treatment may include lifestyle interventions and, when clinically '
+                                       'appropriate, medications selected by a licensed clinician. This platform does '
+                                       'not recommend individualized treatment.\n'
+                                       '\n'
+                                       'Prevention\n'
+                                       'Healthy diet, physical activity, reduced sodium intake, weight management, and '
+                                       'avoiding tobacco can reduce risk for many people.',
+ 'trial_article_demo.json': '{"title":"Demo Biomedical Article on Lifestyle Interventions","license":"CC BY compatible '
+                            'demo content authored for this repository","year":2026,"abstract":"This demonstration '
+                            'article describes representation of lifestyle intervention evidence in a retrieval '
+                            'corpus.","methods":"Synthetic demo content only.","results":"No clinical efficacy claims '
+                            'are made.","conclusion":"Medical RAG systems should ground answers in evidence and '
+                            'communicate limitations."}'}
+class DemoSourceAdapter(SourceAdapter):
+    id='demo'; name='Small Demo Medical Corpus'
+    def download(self,target_dir,limit=5):
+        target_dir.mkdir(parents=True, exist_ok=True); files=[]
+        for n,b in list(DEMO_DOCS.items())[:limit]:
+            p=target_dir/n; p.write_text(b+'\n', encoding='utf-8'); files.append(p)
+        return SourceDownloadResult(self.name,target_dir,files,'Public educational demo corpus authored for this repository','Synthetic demo docs; no patient data.')

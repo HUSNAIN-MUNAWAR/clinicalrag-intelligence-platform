@@ -1,0 +1,134 @@
+{
+  "version": "2026-06-25",
+  "default_target_dir": "data/open_medical_corpus",
+  "profiles": {
+    "portfolio": "Download sources suitable for a public portfolio demo. Includes non-commercial sources with clear labels.",
+    "commercial": "Download only sources marked as commercial-safe by the manifest.",
+    "all": "Download every enabled source in the manifest."
+  },
+  "sources": [
+    {
+      "id": "medlineplus_health_topics",
+      "name": "MedlinePlus Health Topic XML",
+      "downloader": "medlineplus_latest",
+      "enabled": true,
+      "commercial_safe": true,
+      "license": "Public domain health-topic summaries with MedlinePlus/NLM attribution requirements; avoid separately copyrighted A.D.A.M. and ASHP material.",
+      "source_url": "https://medlineplus.gov/xml.html",
+      "terms_url": "https://medlineplus.gov/about/using/usingcontent/",
+      "attribution": "Source: MedlinePlus, National Library of Medicine.",
+      "notes": "Downloads the latest official health-topic XML, which contains many patient education topics.",
+      "limit_default": 1
+    },
+    {
+      "id": "openfda_drug_labels",
+      "name": "openFDA Drug Labeling Sample",
+      "downloader": "openfda_drug_labels",
+      "enabled": true,
+      "commercial_safe": true,
+      "license": "Generally public domain / CC0 unless endpoint documentation marks exceptions; no endorsement implied.",
+      "source_url": "https://open.fda.gov/apis/drug/label/",
+      "terms_url": "https://open.fda.gov/terms/",
+      "api_url": "https://api.fda.gov/drug/label.json",
+      "query": "_exists_:indications_and_usage",
+      "attribution": "Data provided by the U.S. Food and Drug Administration (https://open.fda.gov).",
+      "notes": "Stores each label as a JSON document with indications, warnings, contraindications, dosage, adverse reactions, and interactions when present.",
+      "limit_default": 25
+    },
+    {
+      "id": "pmc_open_access_articles",
+      "name": "PMC Open Access Commercial-Use Article Sample",
+      "downloader": "pmc_oa_articles",
+      "enabled": true,
+      "commercial_safe": true,
+      "license": "Article-level Creative Commons license required. Default filter keeps CC0, CC BY, CC BY-SA, and CC BY-ND and skips retracted records.",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/tools/openftlist/",
+      "terms_url": "https://pmc.ncbi.nlm.nih.gov/tools/ftp/",
+      "file_list_url": "https://pmc-oa-opendata.s3.amazonaws.com/deprecated/oa_comm/xml/metadata/csv/oa_comm.filelist.csv",
+      "object_base_url": "https://pmc-oa-opendata.s3.amazonaws.com/",
+      "package_base_url": "https://ftp.ncbi.nlm.nih.gov/pub/pmc/",
+      "allowed_licenses": ["CC0", "CC BY", "CC BY-SA", "CC BY-ND"],
+      "attribution": "PMC Open Access Subset, National Library of Medicine. Preserve article-level license and citation metadata.",
+      "notes": "Streams the official AWS OA commercial-use XML file list and downloads a small number of direct XML article files.",
+      "limit_default": 5
+    },
+    {
+      "id": "cdc_public_health_pages",
+      "name": "CDC Public Health Pages",
+      "downloader": "direct_pages",
+      "enabled": true,
+      "commercial_safe": true,
+      "license": "Most CDC/ATSDR website information is public domain, with attribution, no endorsement, and third-party-content cautions.",
+      "source_url": "https://www.cdc.gov/other/agencymaterials.html",
+      "terms_url": "https://www.cdc.gov/other/agencymaterials.html",
+      "attribution": "Source: Centers for Disease Control and Prevention.",
+      "notes": "Downloads a focused set of public health HTML pages for retrieval demos.",
+      "urls": [
+        {
+          "title": "About High Blood Pressure",
+          "url": "https://www.cdc.gov/high-blood-pressure/about/index.html",
+          "filename": "cdc_about_high_blood_pressure.html"
+        },
+        {
+          "title": "About Asthma",
+          "url": "https://www.cdc.gov/asthma/about/index.html",
+          "filename": "cdc_about_asthma.html"
+        },
+        {
+          "title": "About Diabetes",
+          "url": "https://www.cdc.gov/diabetes/about/index.html",
+          "filename": "cdc_about_diabetes.html"
+        },
+        {
+          "title": "About Flu",
+          "url": "https://www.cdc.gov/flu/about/index.html",
+          "filename": "cdc_about_flu.html"
+        }
+      ],
+      "limit_default": 4
+    },
+    {
+      "id": "who_open_access_guidelines",
+      "name": "WHO Open Access Guideline PDFs",
+      "downloader": "direct_files",
+      "enabled": true,
+      "commercial_safe": false,
+      "license": "CC BY-NC-SA 3.0 IGO for non-commercial use; preserve attribution and do not imply WHO endorsement.",
+      "source_url": "https://www.who.int/about/policies/publishing/copyright",
+      "terms_url": "https://www.who.int/about/policies/publishing/copyright",
+      "attribution": "World Health Organization publications. Licence: CC BY-NC-SA 3.0 IGO unless the publication states otherwise.",
+      "notes": "Good for a non-commercial portfolio demo; exclude from commercial freelance deployments unless permission/licensing is handled.",
+      "urls": [
+        {
+          "title": "WHO Guideline for the Pharmacological Treatment of Hypertension in Adults",
+          "url": "https://iris.who.int/bitstreams/f062769d-f075-4a00-87af-0a2106e0bd04/download",
+          "filename": "who_hypertension_guideline_2021.pdf"
+        },
+        {
+          "title": "WHO Medication Safety in Polypharmacy",
+          "url": "https://www.who.int/docs/default-source/patient-safety/who-uhc-sds-2019-11-eng.pdf",
+          "filename": "who_medication_safety_polypharmacy_2019.pdf"
+        },
+        {
+          "title": "WHO HEARTS Hypertension Protocol Tool",
+          "url": "https://www.who.int/docs/default-source/ncds/cardiovascular-diseases/heart-package-tool-for-the-development.pdf?sfvrsn=f3436ce5_2",
+          "filename": "who_hearts_hypertension_protocol_tool.pdf"
+        }
+      ],
+      "limit_default": 3
+    },
+    {
+      "id": "nice_guidelines_reference_only",
+      "name": "NICE Guidelines - Reference Only, Not Downloaded",
+      "downloader": "none",
+      "enabled": false,
+      "commercial_safe": false,
+      "license": "Current NICE reuse terms exclude AI use without permission.",
+      "source_url": "https://www.nice.org.uk/reusing-our-content/nice-uk-open-content-licence",
+      "terms_url": "https://www.nice.org.uk/reusing-our-content/nice-uk-open-content-licence",
+      "attribution": "Not downloaded by this project.",
+      "notes": "Kept in the manifest to show license diligence and why this source is not part of the default RAG corpus.",
+      "limit_default": 0
+    }
+  ]
+}

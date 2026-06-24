@@ -1,0 +1,21 @@
+Hypertension Overview
+License: Public educational demo content written for this repository.
+Year: 2026
+
+Summary
+Hypertension means persistently elevated blood pressure. It is a risk factor for cardiovascular disease, stroke, kidney disease, and other complications.
+
+Symptoms
+Many people with hypertension do not have symptoms. Very high blood pressure can be associated with headache, shortness of breath, chest pain, or neurologic symptoms, which require urgent clinical evaluation.
+
+Risk Factors
+Risk factors can include age, family history, high sodium intake, obesity, physical inactivity, tobacco use, diabetes, kidney disease, and some medications.
+
+Diagnosis
+Diagnosis is based on repeated properly measured blood pressure readings using validated equipment.
+
+Treatment
+Treatment may include lifestyle interventions and, when clinically appropriate, medications selected by a licensed clinician. This platform does not recommend individualized treatment.
+
+Prevention
+Healthy diet, physical activity, reduced sodium intake, weight management, and avoiding tobacco can reduce risk for many people.
