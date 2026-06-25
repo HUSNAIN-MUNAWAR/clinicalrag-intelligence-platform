@@ -1,2 +1,21 @@
-import {apiGet,endpoints} from '@/lib/api';
-export default async function Explorer(){const docs:any[]=await apiGet(endpoints.documents).catch(()=>[]); return <div><h1 className="text-3xl font-bold">Knowledge Explorer</h1><div className="mt-6 grid gap-3">{docs.map(d=><div className="card p-4" key={d.id}><b>{d.title}</b><div className="text-sm text-slate-500">{d.medical_category} • {d.publication_type} • {d.year ?? 'unknown year'}</div></div>)}</div></div>}
+import { apiGet, endpoints } from '@/lib/api';
+
+export default async function Explorer() {
+  const docs: any[] = await apiGet<any[]>(endpoints.documents).catch(() => []);
+
+  return (
+    <div>
+      <h1 className="text-3xl font-bold">Knowledge Explorer</h1>
+      <div className="mt-6 grid gap-3">
+        {docs.map((d) => (
+          <div className="card p-4" key={d.id}>
+            <b>{d.title}</b>
+            <div className="text-sm text-slate-500">
+              {d.medical_category} - {d.publication_type} - {d.year ?? 'unknown year'}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

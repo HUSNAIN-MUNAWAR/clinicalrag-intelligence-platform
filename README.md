@@ -134,15 +134,29 @@ flowchart LR
   Cite --> Report
 ```
 
-## Screenshots placeholder
+## Screenshots
 
-Add screenshots after running locally:
+The screenshots below were captured from the local FastAPI + Next.js application after seeding the demo corpus and asking a citation-grounded medical RAG question.
 
-- `docs/screenshots/overview.png`
-- `docs/screenshots/rag-playground.png`
-- `docs/screenshots/comparison-lab.png`
-- `docs/screenshots/evaluation-lab.png`
-- `docs/screenshots/safety-center.png`
+### Executive overview
+
+![Executive overview](docs/screenshots/overview.png)
+
+### RAG playground with citation evidence
+
+![RAG playground with citation evidence](docs/screenshots/rag-playground.png)
+
+### Pipeline comparison lab
+
+![Pipeline comparison lab](docs/screenshots/comparison-lab.png)
+
+### Evaluation lab
+
+![Evaluation lab](docs/screenshots/evaluation-lab.png)
+
+### Safety center
+
+![Safety center](docs/screenshots/safety-center.png)
 
 ## Features
 
