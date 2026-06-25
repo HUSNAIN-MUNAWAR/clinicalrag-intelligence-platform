@@ -22,6 +22,30 @@ Most RAG demos are simple chatbots. ClinicalRAG is designed to demonstrate senio
 - Next.js TypeScript dashboard design
 - MLOps/DevOps: Docker Compose, Makefile, CI, tests, validation scripts
 
+## Screenshots
+
+The screenshots below were captured from the local FastAPI + Next.js application after seeding the demo corpus and asking a citation-grounded medical RAG question.
+
+### Executive overview
+
+![Executive overview](docs/screenshots/overview.png)
+
+### RAG playground with citation evidence
+
+![RAG playground with citation evidence](docs/screenshots/rag-playground.png)
+
+### Pipeline comparison lab
+
+![Pipeline comparison lab](docs/screenshots/comparison-lab.png)
+
+### Evaluation lab
+
+![Evaluation lab](docs/screenshots/evaluation-lab.png)
+
+### Safety center
+
+![Safety center](docs/screenshots/safety-center.png)
+
 ## Architecture
 
 ```mermaid
@@ -127,36 +151,12 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-  Set[Evaluation Questions] --> Run[Run Pipeline]
-  Run --> Scores[Recall@K Precision@K MRR nDCG]
-  Run --> Cite[Cit. Coverage + Source Diversity]
-  Scores --> Report[JSON Report]
+  Set["Evaluation Questions"] --> Run["Run Pipeline"]
+  Run --> Scores["Recall@K + Precision@K + MRR + nDCG"]
+  Run --> Cite["Citation Coverage + Source Diversity"]
+  Scores --> Report["JSON Report"]
   Cite --> Report
 ```
-
-## Screenshots
-
-The screenshots below were captured from the local FastAPI + Next.js application after seeding the demo corpus and asking a citation-grounded medical RAG question.
-
-### Executive overview
-
-![Executive overview](docs/screenshots/overview.png)
-
-### RAG playground with citation evidence
-
-![RAG playground with citation evidence](docs/screenshots/rag-playground.png)
-
-### Pipeline comparison lab
-
-![Pipeline comparison lab](docs/screenshots/comparison-lab.png)
-
-### Evaluation lab
-
-![Evaluation lab](docs/screenshots/evaluation-lab.png)
-
-### Safety center
-
-![Safety center](docs/screenshots/safety-center.png)
 
 ## Features
 
