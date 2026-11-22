@@ -1,0 +1,298 @@
+{
+  "artifacts": {
+    "comparison_csv": {
+      "path": "docs/animation/runtime-evidence/clinicalrag-comparison.csv",
+      "sha256": "5ebf163c577ee6c1b3e6d249e03ea4071b3230cdb0c470fec881fc476af3ad96"
+    },
+    "poster": {
+      "path": "docs/animation/runtime-evidence/clinicalrag-runtime-poster.png",
+      "sha256": "345638e9f58870e94d0245f7d97a65a987c2903923c0cc6a82bdba2fbf2b6aa5"
+    },
+    "retrieval_csv": {
+      "path": "docs/animation/runtime-evidence/clinicalrag-retrieval.csv",
+      "sha256": "db5b3ccc060169605e0163e6979da22c50cea76890fcf1fe45d83ceb745f4360"
+    },
+    "sources_csv": {
+      "path": "docs/animation/runtime-evidence/clinicalrag-source-files.csv",
+      "sha256": "69d4ddaa47960731ec3c815285c84f037c3bb705586339a108bdb7f813a7e983"
+    },
+    "video": {
+      "fps": 20,
+      "frames": 256,
+      "path": "docs/animation/runtime-evidence/clinicalrag-runtime.mp4",
+      "sha256": "0fe326234ef225ec26e9bea590f907760eedf83476e9501141361628b63c9698"
+    }
+  },
+  "claim_boundary": "A real local sentence-transformer embeds the synthetic public demo corpus; retrieval and extractive citation generation are measured locally. No external LLM, patient data, clinical validation, or medical advice is claimed.",
+  "comparison": [
+    {
+      "pipeline_id": "vector",
+      "retrieved_count": 5,
+      "scores": "[0.6732, 0.29, 0.2577, 0.187, 0.178]",
+      "top_documents": "[\"Asthma Educational Overview\", \"Hypertension Overview\", \"Hypertension Overview\"]"
+    },
+    {
+      "pipeline_id": "bm25",
+      "retrieved_count": 5,
+      "scores": "[3.077, 2.1509, 0.9106, 0.8072, 0.7922]",
+      "top_documents": "[\"Asthma Educational Overview\", \"Demo Biomedical Article on Lifestyle Interventions\", \"Hypertension Overview\"]"
+    },
+    {
+      "pipeline_id": "hybrid",
+      "retrieved_count": 5,
+      "scores": "[1.0, 0.3857, 0.2096, 0.1809, 0.1131]",
+      "top_documents": "[\"Asthma Educational Overview\", \"Demo Biomedical Article on Lifestyle Interventions\", \"Hypertension Overview\"]"
+    }
+  ],
+  "evaluation": {
+    "avg_source_diversity": 2.3333333333333335,
+    "citation_coverage": 1.0,
+    "mrr": 1.0,
+    "ndcg_at_k": 1.0,
+    "pipeline_id": "hybrid",
+    "precision_at_k": 0.4666666666666666,
+    "question_count": 3,
+    "recall_at_k": 1.0
+  },
+  "fixture": "clinicalrag-safety-grounding-sequence",
+  "grounded_query": {
+    "answer": "Based only on the retrieved educational sources: Symptoms Many people with hypertension do not have symptoms [C1] Hypertension Overview License: Public educational demo content written for this repository [C2] Summary Hypertension means persistently elevated blood pressure [C3] This is educational information only, not diagnosis, prescription, dosage, or personalized medical advice.",
+    "citation_coverage": 0.6,
+    "citation_ids": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5"
+    ],
+    "confidence_level": "high",
+    "evidence_summary": "Retrieved 5 chunks from 1 source document(s). Hallucination risk estimate: low.",
+    "latency_breakdown": {
+      "generation_ms": 0.04,
+      "rerank_ms": 0,
+      "retrieval_ms": 3982.6,
+      "safety_ms": 0,
+      "total_ms": 3984.99
+    },
+    "model_used": "retrieval-only-extractive",
+    "pipeline_used": "hybrid",
+    "refusal_reason": null,
+    "retrieval_scores": {
+      "bm25_hits": 5,
+      "hybrid_hits": 5,
+      "vector_hits": 10
+    },
+    "retrieved_chunks": [
+      {
+        "bm25_score": 0.9999999996935144,
+        "chunk_id": "be177053-7bf3-4d14-bb9b-8804932ad4a8",
+        "document_id": "d07367ea-e2ae-420a-9a01-23852a631935",
+        "metadata": {
+          "doc_type": "txt",
+          "license": "CC-BY-4.0-demo",
+          "medical_category": "health_topic",
+          "publication_type": "health_topic",
+          "source_id": "96d7d954-5154-4927-997c-a079554d22a9",
+          "source_name": "Demo Medical Corpus",
+          "topic": "Hypertension Overview",
+          "year": 2026
+        },
+        "parent_id": "a5bcb39e-e29a-4b0a-9d63-c8490d6a6ba3",
+        "reason": "Selected by weighted fusion of vector and BM25 retrieval.",
+        "reranker_score": null,
+        "score": 0.9999999991243628,
+        "score_type": "hybrid",
+        "section": "symptoms",
+        "text": "Symptoms\nMany people with hypertension do not have symptoms. Very high blood pressure can be associated with headache, shortness of breath, chest pain, or neurologic symptoms, which require urgent clinical evaluation.",
+        "title": "Hypertension Overview",
+        "vector_score": 0.9999999986586932
+      },
+      {
+        "bm25_score": 0.05992933839830805,
+        "chunk_id": "85b7da83-1da1-4d70-ad3d-2650d581df48",
+        "document_id": "d07367ea-e2ae-420a-9a01-23852a631935",
+        "metadata": {
+          "doc_type": "txt",
+          "license": "CC-BY-4.0-demo",
+          "medical_category": "health_topic",
+          "publication_type": "health_topic",
+          "source_id": "96d7d954-5154-4927-997c-a079554d22a9",
+          "source_name": "Demo Medical Corpus",
+          "topic": "Hypertension Overview",
+          "year": 2026
+        },
+        "parent_id": "baf453aa-a09c-4e5b-b092-6342fbb03db7",
+        "reason": "Selected by weighted fusion of vector and BM25 retrieval.",
+        "reranker_score": null,
+        "score": 0.4072602229134889,
+        "score_type": "hybrid",
+        "section": "abstract",
+        "text": "Hypertension Overview\nLicense: Public educational demo content written for this repository.\nYear: 2026",
+        "title": "Hypertension Overview",
+        "vector_score": 0.6914400375168186
+      },
+      {
+        "bm25_score": 0.0,
+        "chunk_id": "aeca748a-df72-4d2f-ad00-f2ce06d87cc2",
+        "document_id": "d07367ea-e2ae-420a-9a01-23852a631935",
+        "metadata": {
+          "doc_type": "txt",
+          "license": "CC-BY-4.0-demo",
+          "medical_category": "health_topic",
+          "publication_type": "health_topic",
+          "source_id": "96d7d954-5154-4927-997c-a079554d22a9",
+          "source_name": "Demo Medical Corpus",
+          "topic": "Hypertension Overview",
+          "year": 2026
+        },
+        "parent_id": "a7de600e-cb67-4fd9-ba43-2fbc9123c6fb",
+        "reason": "Selected by weighted fusion of vector and BM25 retrieval.",
+        "reranker_score": null,
+        "score": 0.3964044185525574,
+        "score_type": "hybrid",
+        "section": "abstract",
+        "text": "Summary\nHypertension means persistently elevated blood pressure. It is a risk factor for cardiovascular disease, stroke, kidney disease, and other complications.",
+        "title": "Hypertension Overview",
+        "vector_score": 0.7207353064591953
+      },
+      {
+        "bm25_score": null,
+        "chunk_id": "501a56ca-0fff-445c-8af1-b6cf67e6a818",
+        "document_id": "d07367ea-e2ae-420a-9a01-23852a631935",
+        "metadata": {
+          "doc_type": "txt",
+          "license": "CC-BY-4.0-demo",
+          "medical_category": "health_topic",
+          "publication_type": "health_topic",
+          "source_id": "96d7d954-5154-4927-997c-a079554d22a9",
+          "source_name": "Demo Medical Corpus",
+          "topic": "Hypertension Overview",
+          "year": 2026
+        },
+        "parent_id": "025fac39-900c-4e6d-a467-41bfa5eebd37",
+        "reason": "Selected by weighted fusion of vector and BM25 retrieval.",
+        "reranker_score": null,
+        "score": 0.3272692275818536,
+        "score_type": "hybrid",
+        "section": "diagnosis",
+        "text": "Diagnosis\nDiagnosis is based on repeated properly measured blood pressure readings using validated equipment.",
+        "title": "Hypertension Overview",
+        "vector_score": 0.5950349592397338
+      },
+      {
+        "bm25_score": null,
+        "chunk_id": "e068cce7-3cb7-47e9-8cca-0dc3934e9fc5",
+        "document_id": "d07367ea-e2ae-420a-9a01-23852a631935",
+        "metadata": {
+          "doc_type": "txt",
+          "license": "CC-BY-4.0-demo",
+          "medical_category": "health_topic",
+          "publication_type": "health_topic",
+          "source_id": "96d7d954-5154-4927-997c-a079554d22a9",
+          "source_name": "Demo Medical Corpus",
+          "topic": "Hypertension Overview",
+          "year": 2026
+        },
+        "parent_id": "6ba0bc18-c4c2-4ab8-9293-c2ff7c853ff8",
+        "reason": "Selected by weighted fusion of vector and BM25 retrieval.",
+        "reranker_score": null,
+        "score": 0.27007512548520335,
+        "score_type": "hybrid",
+        "section": "risk_factors",
+        "text": "Risk Factors\nRisk factors can include age, family history, high sodium intake, obesity, physical inactivity, tobacco use, diabetes, kidney disease, and some medications.",
+        "title": "Hypertension Overview",
+        "vector_score": 0.4910456827003697
+      }
+    ],
+    "safety_status": "allowed",
+    "source_titles": [
+      "Hypertension Overview",
+      "Hypertension Overview",
+      "Hypertension Overview",
+      "Hypertension Overview",
+      "Hypertension Overview"
+    ]
+  },
+  "runtime": {
+    "answer_model": "retrieval-only-extractive",
+    "embedding_dim": 384,
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "embedding_probe": {
+      "dimension": 384,
+      "norm": 1.0,
+      "sha256": "ed0881fc8c59b9b10f5530271798202235c4492f2108b97263f3d878c0798114",
+      "text": "hypertension symptoms and grounded educational evidence"
+    },
+    "embedding_provider": "sentence_transformers",
+    "external_llm_called": false,
+    "llm_provider": "retrieval_only",
+    "numpy_version": "2.5.1",
+    "pipeline": "hybrid",
+    "python_version": "3.12.10",
+    "top_k": 5
+  },
+  "schema_version": "2.0",
+  "source": {
+    "adapter": "backend/app/ingestion/source_adapters/demo_adapter.py::DemoSourceAdapter",
+    "chunk_count": 20,
+    "document_count": 3,
+    "failed_files": 0,
+    "path": "demo/animation_fixture.synthetic.json",
+    "processed_files": 3,
+    "raw_files": [
+      {
+        "bytes": 0,
+        "path": "data/demo_corpus/raw/.gitkeep",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "bytes": 770,
+        "path": "data/demo_corpus/raw/asthma_educational_topic.xml",
+        "sha256": "a0adac0f6ca9966ff7ca909ca0ad701046f80e564fd471e01d6306cf2bd7e8e5"
+      },
+      {
+        "bytes": 1125,
+        "path": "data/demo_corpus/raw/hypertension_medlineplus_style.txt",
+        "sha256": "9e262d734c1217f8a5672b4b500077a4a43c969502a66bfe772c6c6868a9fa1e"
+      },
+      {
+        "bytes": 459,
+        "path": "data/demo_corpus/raw/trial_article_demo.json",
+        "sha256": "7d6d32d91e00f06c7623df869c2ba44a1942a3a6793b46eb514e930687871f6b"
+      }
+    ],
+    "sha256": "33afebd0d673865dde48b3d74999772645aefd5f76268e0b57afa79bcf441e01",
+    "synthetic": true
+  },
+  "unsafe_query": {
+    "classifier": {
+      "allowed": false,
+      "category": "prescription",
+      "matched_patterns": [
+        "dosage"
+      ],
+      "severity": "high"
+    },
+    "trace": {
+      "answer": "I cannot provide diagnosis, emergency triage, prescription, dosage, or personalized medical advice. This platform is for educational and research-focused medical knowledge retrieval only. Please contact a qualified healthcare professional for personal medical decisions. I can still provide general, citation-grounded educational information.",
+      "citation_coverage": 0.0,
+      "citation_ids": [],
+      "confidence_level": "refused",
+      "evidence_summary": "No retrieval performed because the request was unsafe.",
+      "latency_breakdown": {
+        "generation_ms": 0,
+        "rerank_ms": 0,
+        "retrieval_ms": 0,
+        "safety_ms": 0,
+        "total_ms": 7.0
+      },
+      "model_used": "none",
+      "pipeline_used": "hybrid",
+      "refusal_reason": "The system cannot provide prescription or dosage advice.",
+      "retrieval_scores": {},
+      "retrieved_chunks": [],
+      "safety_status": "refused",
+      "source_titles": []
+    }
+  }
+}

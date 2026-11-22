@@ -1,3 +1,4 @@
+import hashlib
 import json
 from dataclasses import dataclass, asdict
 import numpy as np
@@ -8,7 +9,15 @@ from app.rag.embeddings import EmbeddingService
 class VectorRecord:
     chunk_id:str; document_id:str; parent_id:str|None; title:str; source_name:str|None; section:str|None; text:str; embedding:list[float]; metadata:dict
 class LocalVectorStore:
-    def __init__(self): self.path=settings.indexes_dir/'vector_index.json'; self.embedder=EmbeddingService(); self.records=[]; self.load()
+    def __init__(self):
+        self.embedder = EmbeddingService()
+        index_name = 'vector_index.json'
+        if settings.embedding_provider != 'local_hash':
+            suffix = hashlib.sha256(f'{settings.embedding_provider}:{settings.embedding_model}'.encode()).hexdigest()[:12]
+            index_name = f'vector_index_{settings.embedding_provider}_{suffix}.json'
+        self.path = settings.indexes_dir / index_name
+        self.records = []
+        self.load()
     def load(self): self.records=[VectorRecord(**r) for r in json.loads(self.path.read_text())] if self.path.exists() else []
     def save(self): self.path.parent.mkdir(parents=True, exist_ok=True); self.path.write_text(json.dumps([asdict(r) for r in self.records], ensure_ascii=False), encoding='utf-8'); self.embedder.flush()
     def rebuild_from_db(self,db):

@@ -1,0 +1,4 @@
+pipeline_id,retrieved_count,top_documents,scores
+vector,5,"[""Asthma Educational Overview"", ""Hypertension Overview"", ""Hypertension Overview""]","[0.6732, 0.29, 0.2577, 0.187, 0.178]"
+bm25,5,"[""Asthma Educational Overview"", ""Demo Biomedical Article on Lifestyle Interventions"", ""Hypertension Overview""]","[3.077, 2.1509, 0.9106, 0.8072, 0.7922]"
+hybrid,5,"[""Asthma Educational Overview"", ""Demo Biomedical Article on Lifestyle Interventions"", ""Hypertension Overview""]","[1.0, 0.3857, 0.2096, 0.1809, 0.1131]"

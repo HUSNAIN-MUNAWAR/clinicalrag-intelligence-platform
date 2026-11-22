@@ -1,0 +1,6 @@
+rank,citation_id,title,section,score,vector_score,bm25_score,text
+1,C1,Hypertension Overview,symptoms,0.9999999991243628,0.9999999986586932,0.9999999996935144,"Symptoms Many people with hypertension do not have symptoms. Very high blood pressure can be associated with headache, shortness of breath, chest pain, or neurologic symptoms, which require urgent clinical evaluation."
+2,C2,Hypertension Overview,abstract,0.4072602229134889,0.6914400375168186,0.05992933839830805,Hypertension Overview License: Public educational demo content written for this repository. Year: 2026
+3,C3,Hypertension Overview,abstract,0.3964044185525574,0.7207353064591953,0.0,"Summary Hypertension means persistently elevated blood pressure. It is a risk factor for cardiovascular disease, stroke, kidney disease, and other complications."
+4,C4,Hypertension Overview,diagnosis,0.3272692275818536,0.5950349592397338,,Diagnosis Diagnosis is based on repeated properly measured blood pressure readings using validated equipment.
+5,C5,Hypertension Overview,risk_factors,0.27007512548520335,0.4910456827003697,,"Risk Factors Risk factors can include age, family history, high sodium intake, obesity, physical inactivity, tobacco use, diabetes, kidney disease, and some medications."

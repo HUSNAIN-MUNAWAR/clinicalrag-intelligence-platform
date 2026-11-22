@@ -1,4 +1,4 @@
-.PHONY: install backend frontend seed open-corpus open-corpus-commercial eval compare animation test validate run-api run-web docker-up docker-down
+.PHONY: install backend frontend seed open-corpus open-corpus-commercial eval compare animation real-runtime test validate run-api run-web docker-up docker-down
 install:
 	python -m pip install -r backend/requirements.txt
 	cd frontend && npm install
@@ -18,6 +18,8 @@ compare:
 	python scripts/compare_pipelines.py "What are common symptoms of hypertension?"
 animation:
 	python scripts/generate_clinicalrag_animation.py
+real-runtime:
+	python scripts/generate_real_runtime_video.py
 test:
 	python -m pytest -q backend/tests
 validate:

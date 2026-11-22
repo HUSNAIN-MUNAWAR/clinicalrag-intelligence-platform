@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     ollama_model: str = Field(default='llama3.1', validation_alias=AliasChoices('CLINICALRAG_OLLAMA_MODEL','OLLAMA_MODEL'))
     embedding_provider: str = Field(default='local_hash', validation_alias=AliasChoices('CLINICALRAG_EMBEDDING_PROVIDER','EMBEDDING_PROVIDER'))
     embedding_dim: int = Field(default=384, validation_alias=AliasChoices('CLINICALRAG_EMBEDDING_DIM','EMBEDDING_DIM'))
+    embedding_model: str = Field(default='sentence-transformers/all-MiniLM-L6-v2', validation_alias=AliasChoices('CLINICALRAG_EMBEDDING_MODEL','EMBEDDING_MODEL'))
     vector_store: str = Field(default='local', validation_alias=AliasChoices('CLINICALRAG_VECTOR_STORE','VECTOR_STORE'))
     top_k: int = Field(default=6, validation_alias=AliasChoices('CLINICALRAG_TOP_K','TOP_K'))
     chunk_size: int = Field(default=900, validation_alias=AliasChoices('CLINICALRAG_CHUNK_SIZE','CHUNK_SIZE'))

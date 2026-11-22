@@ -158,6 +158,17 @@ flowchart LR
   Cite --> Report
 ```
 
+## Real local model runtime evidence
+
+The accepted runtime animation executes a real local `sentence-transformers/all-MiniLM-L6-v2` embedding model through the repository's ingestion and hybrid retrieval path, then preserves the actual citations, safety refusal, evaluation metrics, and output hashes:
+
+```powershell
+$env:HF_HUB_DISABLE_IMPLICIT_TOKEN = "1"
+python scripts/generate_real_runtime_video.py
+```
+
+Review [`docs/animation/REAL_RUNTIME.md`](docs/animation/REAL_RUNTIME.md) and [`docs/animation/runtime-evidence/`](docs/animation/runtime-evidence/). The answerer is deliberately reported as retrieval-only because no external LLM endpoint was called. The demo corpus is synthetic public content and the metrics are not clinical validation.
+
 ## Grounding and safety animation reference
 
 Regenerate the deterministic synthetic-data reel with the same ingestion, hybrid retrieval, citation, safety, and evaluation services used by the application:
@@ -167,7 +178,7 @@ python scripts/generate_clinicalrag_animation.py
 # or: make animation
 ```
 
-The output is `docs/animation/clinicalrag_grounding_sequence.json` plus the dependency-free `frontend/public/animation/clinicalrag-grounding-reel.html`. It runs in a temporary runtime directory and deliberately makes no clinical, patient-data, or external-LLM claims.
+The output is `docs/animation/clinicalrag_grounding_sequence.json` plus the dependency-free `frontend/public/animation/clinicalrag-grounding-reel.html`. It remains a deterministic preflight/reference UI; use the real-runtime command above for model evidence.
 
 ## Features
 
