@@ -158,6 +158,17 @@ flowchart LR
   Cite --> Report
 ```
 
+## Grounding and safety animation reference
+
+Regenerate the deterministic synthetic-data reel with the same ingestion, hybrid retrieval, citation, safety, and evaluation services used by the application:
+
+```bash
+python scripts/generate_clinicalrag_animation.py
+# or: make animation
+```
+
+The output is `docs/animation/clinicalrag_grounding_sequence.json` plus the dependency-free `frontend/public/animation/clinicalrag-grounding-reel.html`. It runs in a temporary runtime directory and deliberately makes no clinical, patient-data, or external-LLM claims.
+
 ## Features
 
 - Open/public medical data source manager

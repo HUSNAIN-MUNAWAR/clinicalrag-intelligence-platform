@@ -1,0 +1,181 @@
+{
+  "claim_boundary": "Synthetic public demo documents and deterministic local retrieval only; not clinical advice, validation, diagnosis, or patient-data processing.",
+  "comparison": [
+    {
+      "pipeline_id": "vector",
+      "retrieved_count": 5,
+      "scores": [
+        0.1418,
+        0.1396,
+        0.1363,
+        0.0914,
+        0.08
+      ],
+      "top_documents": [
+        "Asthma Educational Overview",
+        "Demo Biomedical Article on Lifestyle Interventions",
+        "Hypertension Overview"
+      ]
+    },
+    {
+      "pipeline_id": "bm25",
+      "retrieved_count": 5,
+      "scores": [
+        3.077,
+        2.1509,
+        0.9106,
+        0.8072,
+        0.7922
+      ],
+      "top_documents": [
+        "Asthma Educational Overview",
+        "Demo Biomedical Article on Lifestyle Interventions",
+        "Hypertension Overview"
+      ]
+    },
+    {
+      "pipeline_id": "hybrid",
+      "retrieved_count": 5,
+      "scores": [
+        1.0,
+        0.8091,
+        0.529,
+        0.378,
+        0.3135
+      ],
+      "top_documents": [
+        "Asthma Educational Overview",
+        "Demo Biomedical Article on Lifestyle Interventions",
+        "Hypertension Overview"
+      ]
+    }
+  ],
+  "evaluation": {
+    "avg_source_diversity": 3.0,
+    "citation_coverage": 1.0,
+    "mrr": 1.0,
+    "ndcg_at_k": 1.0,
+    "pipeline_id": "hybrid",
+    "precision_at_k": 0.26666666666666666,
+    "question_count": 3,
+    "recall_at_k": 1.0
+  },
+  "events": [
+    {
+      "detail": "The repository demo adapter writes three public educational documents, then the real ingestion pipeline parses, cleans, chunks, and indexes them.",
+      "id": "ingest",
+      "metric": "completed \u00b7 3 files \u00b7 20 chunks",
+      "short": "Ingest",
+      "status": "completed",
+      "title": "Synthetic open-corpus files enter the pipeline"
+    },
+    {
+      "detail": "Vector and BM25 stores are fused by the repository's hybrid pipeline before answer generation.",
+      "id": "retrieve",
+      "metric": "5 chunks \u00b7 3 documents",
+      "short": "Retrieve",
+      "status": "retrieved",
+      "title": "Hybrid retrieval finds evidence"
+    },
+    {
+      "detail": "The citation builder assigns stable C-numbers to retrieved evidence and preserves source titles and sections.",
+      "id": "cite",
+      "metric": "5 citations \u00b7 high confidence",
+      "short": "Cite",
+      "status": "grounded",
+      "title": "Evidence becomes citation objects"
+    },
+    {
+      "detail": "The default local answerer uses retrieved excerpts and citation IDs; no external model or clinical recommendation is claimed.",
+      "id": "answer",
+      "metric": "retrieval-only-extractive",
+      "short": "Answer",
+      "status": "allowed",
+      "title": "Retrieval-only generation stays bounded"
+    },
+    {
+      "detail": "The deterministic medical safety classifier blocks a patient-specific dosage request before retrieval and records the refusal category.",
+      "id": "safety",
+      "metric": "prescription \u00b7 high",
+      "short": "Safety",
+      "status": "refused",
+      "title": "Unsafe dosage requests are refused"
+    },
+    {
+      "detail": "The seeded evaluation questions run through the same hybrid pipeline and report recall, precision, MRR, nDCG, and citation coverage.",
+      "id": "evaluate",
+      "metric": "3 questions \u00b7 recall 1.00 \u00b7 MRR 1.00",
+      "short": "Evaluate",
+      "status": "measured",
+      "title": "Retrieval quality is measured"
+    }
+  ],
+  "fixture": "clinicalrag-safety-grounding-sequence",
+  "grounded_query": {
+    "answer": "Based only on the retrieved educational sources: Symptoms Many people with hypertension do not have symptoms [C1] CC BY compatible demo content authored for this repository 2026 This demonstration article describes representation of lifestyle intervention evidence in a retrieval corpus [C2] title: Asthma Educational Overview license: Public educational demo content written for this repository [C3] This is educational information only, not diagnosis, prescription, dosage, or personalized medical advice.",
+    "citation_ids": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5"
+    ],
+    "confidence_level": "high",
+    "evidence_summary": "Retrieved 5 chunks from 3 source document(s). Hallucination risk estimate: low.",
+    "model_used": "retrieval-only-extractive",
+    "pipeline_used": "hybrid",
+    "refusal_reason": null,
+    "retrieval_scores": {
+      "bm25_hits": 5,
+      "hybrid_hits": 5,
+      "vector_hits": 10
+    },
+    "safety_status": "allowed",
+    "source_titles": [
+      "Hypertension Overview",
+      "Demo Biomedical Article on Lifestyle Interventions",
+      "Asthma Educational Overview",
+      "Demo Biomedical Article on Lifestyle Interventions",
+      "Hypertension Overview"
+    ]
+  },
+  "runtime": {
+    "answer_model": "retrieval-only-extractive",
+    "embedding_dim": 384,
+    "embedding_provider": "local_hash",
+    "llm_provider": "retrieval_only",
+    "pipeline": "hybrid",
+    "top_k": 5
+  },
+  "schema_version": "1.0",
+  "source": {
+    "adapter": "backend/app/ingestion/source_adapters/demo_adapter.py::DemoSourceAdapter",
+    "chunk_count": 20,
+    "document_count": 3,
+    "path": "demo/animation_fixture.synthetic.json",
+    "sha256": "7f846eb82a0f0819fd465f6ef69d35cb50c113fab56557a60fa6f36cd5917f56",
+    "synthetic": true
+  },
+  "unsafe_query": {
+    "classifier": {
+      "allowed": false,
+      "category": "prescription",
+      "matched_patterns": [
+        "dosage"
+      ],
+      "severity": "high"
+    },
+    "trace": {
+      "answer": "I cannot provide diagnosis, emergency triage, prescription, dosage, or personalized medical advice. This platform is for educational and research-focused medical knowledge retrieval only. Please contact a qualified healthcare professional for personal medical decisions. I can still provide general, citation-grounded educational information.",
+      "citation_ids": [],
+      "confidence_level": "refused",
+      "evidence_summary": "No retrieval performed because the request was unsafe.",
+      "model_used": "none",
+      "pipeline_used": "hybrid",
+      "refusal_reason": "The system cannot provide prescription or dosage advice.",
+      "retrieval_scores": {},
+      "safety_status": "refused",
+      "source_titles": []
+    }
+  }
+}
