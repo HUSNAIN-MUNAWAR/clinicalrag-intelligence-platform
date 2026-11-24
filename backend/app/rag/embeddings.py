@@ -1,9 +1,25 @@
 import hashlib
 import json
+import os
+import uuid
 
 import numpy as np
 
 from app.core.config import settings
+
+
+def _atomic_json_write(path, value) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f'.{path.name}.{uuid.uuid4().hex}.tmp')
+    try:
+        fd = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(fd, 'w', encoding='utf-8', newline='\n') as handle:
+            handle.write(json.dumps(value, ensure_ascii=False))
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 class EmbeddingService:
@@ -31,7 +47,15 @@ class EmbeddingService:
             cache_name = f'embedding_cache_{self.provider}_{suffix}.json'
         self.cache_path = settings.indexes_dir / cache_name
         self.cache_path.parent.mkdir(parents=True, exist_ok=True)
-        self.cache = json.loads(self.cache_path.read_text()) if self.cache_path.exists() else {}
+        if self.cache_path.exists():
+            try:
+                self.cache = json.loads(self.cache_path.read_text(encoding='utf-8'))
+            except (OSError, json.JSONDecodeError) as exc:
+                raise RuntimeError(f'Embedding cache cannot be read safely: {self.cache_path}') from exc
+            if not isinstance(self.cache, dict):
+                raise RuntimeError(f'Embedding cache must contain a JSON object: {self.cache_path}')
+        else:
+            self.cache = {}
 
     def embed(self, text: str):
         key = hashlib.sha256(text.encode()).hexdigest()
@@ -66,4 +90,4 @@ class EmbeddingService:
         return [self.cache[hashlib.sha256(text.encode()).hexdigest()] for text in texts]
 
     def flush(self):
-        self.cache_path.write_text(json.dumps(self.cache), encoding='utf-8')
+        _atomic_json_write(self.cache_path, self.cache)

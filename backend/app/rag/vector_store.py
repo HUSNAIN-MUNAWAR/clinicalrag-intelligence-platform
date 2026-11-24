@@ -18,8 +18,24 @@ class LocalVectorStore:
         self.path = settings.indexes_dir / index_name
         self.records = []
         self.load()
-    def load(self): self.records=[VectorRecord(**r) for r in json.loads(self.path.read_text())] if self.path.exists() else []
-    def save(self): self.path.parent.mkdir(parents=True, exist_ok=True); self.path.write_text(json.dumps([asdict(r) for r in self.records], ensure_ascii=False), encoding='utf-8'); self.embedder.flush()
+    def load(self):
+        if not self.path.exists():
+            self.records = []
+            return
+        try:
+            data = json.loads(self.path.read_text(encoding='utf-8'))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise RuntimeError(f'Vector index cannot be read safely: {self.path}') from exc
+        if not isinstance(data, list):
+            raise RuntimeError(f'Vector index must contain a JSON list: {self.path}')
+        try:
+            self.records = [VectorRecord(**r) for r in data]
+        except (TypeError, KeyError) as exc:
+            raise RuntimeError(f'Vector index contains an invalid record: {self.path}') from exc
+    def save(self):
+        from app.rag.embeddings import _atomic_json_write
+        _atomic_json_write(self.path, [asdict(r) for r in self.records])
+        self.embedder.flush()
     def rebuild_from_db(self,db):
         rows=db.query(Chunk,Document,Source).join(Document,Chunk.document_id==Document.id).join(Source,Document.source_id==Source.id).filter(Chunk.chunk_type=='child').all(); self.records=[]
         for c,d,s in rows:
